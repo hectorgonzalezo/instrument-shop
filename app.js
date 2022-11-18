@@ -4,10 +4,18 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const sassMiddleware = require('node-sass-middleware');
+const mongoose = require("mongoose");
 
 const indexRouter = require('./routes/index');
 
 const app = express();
+
+const mongoDB = "mongodb+srv://admin:iww500maiww500m@cluster0.aagfox3.mongodb.net/?retryWrites=true&w=majority";
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+
+const db = mongoose.connection;
+
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
