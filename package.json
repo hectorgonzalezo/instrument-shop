@@ -16,7 +16,8 @@
     "mongoose": "^6.7.2",
     "morgan": "~1.9.1",
     "node-sass-middleware": "^1.0.1",
-    "pug": "2.0.0-beta11"
+    "pug": "2.0.0-beta11",
+    "sass": "^1.56.1"
   },
   "devDependencies": {
     "eslint": "^8.27.0",

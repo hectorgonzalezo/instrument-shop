@@ -16,7 +16,6 @@ exports.category_create_post = (req, res) => {
   res.send("category create post")
 };
 
-
 exports.category_update_get = (req, res) => {
   res.send("category update get")
 };

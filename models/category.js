@@ -8,7 +8,7 @@ const CategoryModelSchema = new Schema({
   description: { type: String, required: true },
 });
 
-
+// Add url to list of all instruments in category
 CategoryModelSchema.virtual('url').get(function(){
   return `/catalog/categories/${this._id}`
 })

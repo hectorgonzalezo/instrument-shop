@@ -29,7 +29,7 @@ app.use(cookieParser());
 app.use(sassMiddleware({
   src: path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
-  indentedSyntax: true, // true = .sass and false = .scss
+  indentedSyntax: false, // compile scss
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
