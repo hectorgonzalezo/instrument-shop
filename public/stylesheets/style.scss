@@ -1,13 +1,54 @@
 @import "./reset.css";
 
+$green-yellow-crayola: #dde392ff;
+$laurel-green: #afbe8fff;
+$xanadu: #7d8570ff;
+$ebony: #646f58ff;
+$rifle-green: #504b3aff;
+
+$gradient-top: linear-gradient(0deg, #dde392ff, #afbe8fff, #7d8570ff, #646f58ff, #504b3aff);
+$gradient-right: linear-gradient(90deg, #dde392ff, #afbe8fff, #7d8570ff, #646f58ff, #504b3aff);
+$gradient-bottom: linear-gradient(180deg, #dde392ff, #afbe8fff, #7d8570ff, #646f58ff, #504b3aff);
+$gradient-left: linear-gradient(270deg, #dde392ff, #afbe8fff, #7d8570ff, #646f58ff, #504b3aff);
+$gradient-top-right: linear-gradient(45deg, #dde392ff, #afbe8fff, #7d8570ff, #646f58ff, #504b3aff);
+$gradient-bottom-right: linear-gradient(135deg, #dde392ff, #afbe8fff, #7d8570ff, #646f58ff, #504b3aff);
+$gradient-top-left: linear-gradient(225deg, #dde392ff, #afbe8fff, #7d8570ff, #646f58ff, #504b3aff);
+$gradient-bottom-left: linear-gradient(315deg, #dde392ff, #afbe8fff, #7d8570ff, #646f58ff, #504b3aff);
+$gradient-radial: radial-gradient(#dde392ff, #afbe8fff, #7d8570ff, #646f58ff, #504b3aff);
+
 :root {
+  font-size: clamp(13px, 3vw, 16px);
 }
 
 body {
+  display: grid;
+  grid-template-rows: 100px auto 50px;
+  height: 100vh;
+  & > * {
+    padding: 20px;
+  }
+}
+
+header {
+  background-color: $xanadu;
+}
+
+main {
+  background-color: $laurel-green;
+}
+
+footer {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  padding: 20px;
-  gap: 30px;
+  align-items: center;
+  gap: 25px;
+  background-color: $rifle-green;
+  color: white;
+  h1{
+    font-size: 1.5rem;
+  }
+
+  img{
+    width: 36px;
+  }
 }

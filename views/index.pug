@@ -1,5 +1,12 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  main
+    h1= title
+    h2 Musical instruments shop management app 
+
+    button
+      a(href="/catalog/instruments") View all instruments
+
+    button
+      a(href="/catalog/categories") View all categories
