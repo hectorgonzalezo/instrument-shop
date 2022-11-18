@@ -18,9 +18,12 @@ const InstrumentModelSchema = new Schema({
   imgUrl: { type: String, default: "" },
   // category is an array of ids pointing to categories in the database
   // they can be populated when queried
-  //there should be at least one category
-  categories: {
-    type: [{ type: Schema.Types.ObjectId, ref: "CategoryModel" }],
+  // there should be at least one category
+  categories: { type:
+    [{
+    type: Schema.Types.ObjectId, 
+    ref: "Category",
+    }],
     validate: {
       validator: (val) => val.length > 0,
       message: "Must have at least a category",

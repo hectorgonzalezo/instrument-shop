@@ -3,28 +3,29 @@
 console.log('This script populates the database with instruments and categories');
 
 // Get arguments passed on command line
-var userArgs = process.argv.slice(2);
+const userArgs = process.argv.slice(2);
 /*
 if (!userArgs[0].startsWith('mongodb')) {
     console.log('ERROR: You need to specify a valid mongodb URL as the first argument');
     return
 }
 */
-var async = require('async')
+
+const mongoose = require('mongoose');
+
+const mongoDB = userArgs[0];
+
+mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.Promise = global.Promise;
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+const async = require('async')
 const Instrument = require('./models/instrument');
 const Category = require('./models/category');
 
-
-
-var mongoose = require('mongoose');
-var mongoDB = userArgs[0];
-mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
-mongoose.Promise = global.Promise;
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
-let instruments = []
-let categories = []
+const instrumentsArr = []
+const categoriesArr = []
 
 function instrumentCreate(name, brand, model,  description, tuning, categories, price, stock, cb) {
   const instrument = new Instrument({
@@ -37,28 +38,30 @@ function instrumentCreate(name, brand, model,  description, tuning, categories, 
     price,
     stock,
   });
+
+  console.log(instrument)
        
-  instrument.save(function (err) {
+  instrument.save((err) =>{
     if (err) {
       cb(err, null)
       return
     }
     console.log('New instrument: ' + instrument);
-    instruments.push(instrument)
+    instrumentsArr.push(instrument)
     cb(null, instrument)
   }  );
 }
 
 function categoryCreate(name, description, cb) {
-  var category = new Category({ name, description });
+  const category = new Category({ name, description });
        
-  category.save(function (err) {
+  category.save((err) => {
     if (err) {
       cb(err, null);
       return;
     }
     console.log('New category: ' + category);
-    categories.push(category)
+    categoriesArr.push(category)
     cb(null, category);
   }   );
 }
@@ -98,7 +101,7 @@ function createInstruments(cb) {
 						"Classique",
 						"The Classique embodies the aesthetics and sound signature of Rigoutat oboes; it is the brand’s iconic oboe.\nThis legendary oboe offers the powerful, generous projection that is characteristic of Rigoutat oboes, providing unrivalled transfer and return of sound.",
 						"C",
-						[categories[2]],
+						[categoriesArr[2]._id],
 						8500,
 						1,
 						callback
@@ -111,7 +114,7 @@ function createInstruments(cb) {
 						"Presence",
 						"Thanks to its innovative bore design, this clarinet has unique acoustic qualities that provide ease of emission, exceptional homogeneity and above all an instrument that is easy to play.\nThe sound of the Présence clarinet is a mix of harmonic richness, and timbre; essential characteristics to the instrument. Also, the research done on the position and size of the tone holes has given this clarinet unrivalled intonation.",
 						"Bb",
-						[categories[2]],
+						[categoriesArr[2]._id],
 						3350,
 						2,
 						callback
@@ -124,7 +127,7 @@ function createInstruments(cb) {
 						"Galiano",
 						"Our performance cellos are painstakingly antiqued by hand. The result is an eye-catching instrument that sounds full and resonant.",
 						"",
-						[categories[0]],
+						[categoriesArr[0]._id],
 						3350,
 						2,
 						callback
@@ -137,7 +140,7 @@ function createInstruments(cb) {
 						"ATR-250 Student Series",
 						"The Allora ATR-250 has a medium-large .460 bore, a yellow brass leadpipe and a rose brass bell. It features a first-valve slide thumb saddle, an adjustable 3rd valve slide stop, two water keys and stainless steel pistons for long life and accurate travel. Comes with an upgraded nylon polyfoam case and a three-year warranty.",
 						"Bb",
-						[categories[3]],
+						[categoriesArr[3]._id],
 						699,
 						5,
 						callback
@@ -154,12 +157,12 @@ async.series([
 		createInstruments
 ],
 // Optional callback
-function(err, results) {
+(err, results) => {
     if (err) {
         console.log('FINAL ERR: '+err);
     }
     else {
-        console.log('Instruments: '+ instruments);
+        console.log('Instruments: '+ instrumentsArr);
         
     }
     // All done, disconnect from database

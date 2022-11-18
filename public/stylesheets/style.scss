@@ -33,7 +33,7 @@ header {
   background-color: $xanadu;
 }
 
-main {
+.content {
   background-color: $laurel-green;
 }
 
@@ -44,6 +44,7 @@ footer {
   gap: 25px;
   background-color: $rifle-green;
   color: white;
+
   h1{
     font-size: 1.5rem;
   }

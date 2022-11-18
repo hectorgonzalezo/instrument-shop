@@ -1,7 +1,16 @@
 const Instrument = require("../models/instrument");
+const Category = require("../models/category");
 
-exports.instrument_list = (req, res) => {
-  res.send("Instrument list")
+exports.instrument_list = (req, res, next) => {
+  Instrument.find()
+    .populate("categories")
+    .exec( (err, instruments) => {
+      if (err){
+        return next(err);
+      }
+      console.log(instruments)
+      res.render("instruments_list", { title: "all instruments", instruments });
+    })
 };
 
 exports.instrument_detail = (req, res) => {
