@@ -13,4 +13,4 @@ CategoryModelSchema.virtual('url').get(function(){
   return `/catalog/categories/${this._id}`
 })
 
-module.exports = mongoose.model("CategoryModel", CategoryModelSchema)
+module.exports = mongoose.model("Category", CategoryModelSchema)
