@@ -1,0 +1,24 @@
+@import "variables";
+
+.instrument{
+  display: grid;
+  padding: 10px;
+  gap: 10px;
+  align-items: center;
+  h1{
+    font-size: 2rem;
+    font-weight: 500;
+  }
+  h2 {
+    font-size: 1.5rem;
+    font-style: italic;
+  }
+}
+
+.instrument_small{
+  @extend .instrument;
+  background-color: $ebony;
+  color: white;
+  border-radius: 1rem;
+  box-shadow: 3px 3px 7px black;
+}

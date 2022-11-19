@@ -8,13 +8,19 @@ exports.instrument_list = (req, res, next) => {
       if (err){
         return next(err);
       }
-      console.log(instruments)
       res.render("instruments_list", { title: "all instruments", instruments });
     })
 };
 
-exports.instrument_detail = (req, res) => {
-  res.send("Instrument detail")
+exports.instrument_detail = (req, res, next) => {
+  Instrument.findById(req.params.id)
+    .populate("categories")
+    .exec((err, instrument) => {
+      if (err){
+        return next(err);
+      }
+      res.render("instrument_detail", {instrument})
+    })
 };
 
 exports.instrument_create_get = (req, res) => {

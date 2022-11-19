@@ -1,0 +1,17 @@
+extends layout
+
+block content 
+  h1= title
+  main
+    .instrument
+      h1= `${instrument.name} - ${instrument.brand}`
+      h2= instrument.model
+      if instrument.tuning != ''
+        p.tuning= `Tuning: ${instrument.tuning}`
+      p= instrument.description
+      dl
+        dt Categories:
+          each category in instrument.categories
+            dd= category.name
+      p= `$${instrument.price}`
+      p= `In stock: ${instrument.stock}`

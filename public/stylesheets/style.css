@@ -1,4 +1,22 @@
 @import url(./reset.css);
+.instrument, .instrument_small {
+  display: grid;
+  padding: 10px;
+  gap: 10px;
+  align-items: center; }
+  .instrument h1, .instrument_small h1 {
+    font-size: 2rem;
+    font-weight: 500; }
+  .instrument h2, .instrument_small h2 {
+    font-size: 1.5rem;
+    font-style: italic; }
+
+.instrument_small {
+  background-color: #646f58ff;
+  color: white;
+  border-radius: 1rem;
+  box-shadow: 3px 3px 7px black; }
+
 :root {
   font-size: clamp(13px, 3vw, 16px); }
 
@@ -11,6 +29,14 @@ body {
 
 header {
   background-color: #7d8570ff; }
+
+a {
+  text-decoration: none; }
+
+main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px; }
 
 .content {
   background-color: #afbe8fff; }
