@@ -1,0 +1,10 @@
+extends layout
+
+block content 
+  h1= title
+  main
+    each category in categories
+      a(href=`/catalog/categories/${category._id}`) 
+        .item_small
+          h1= category.name
+          p= category.description

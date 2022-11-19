@@ -2,6 +2,9 @@ extends layout
 
 block content 
   h1= title
+  .category
+    h1= category.name 
+    p= category.description
   main
     each instrument in instruments
       a(href=`/catalog/instruments/${instrument._id}`) 

@@ -1,6 +1,6 @@
 @import "variables";
 
-.instrument{
+.item{
   display: grid;
   padding: 10px;
   gap: 10px;
@@ -15,10 +15,11 @@
   }
 }
 
-.instrument_small{
-  @extend .instrument;
+.item_small{
+  @extend .item;
   background-color: $ebony;
   color: white;
   border-radius: 1rem;
   box-shadow: 3px 3px 7px black;
+  max-width: 400px;
 }

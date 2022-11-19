@@ -1,11 +1,47 @@
+const async = require("async");
 const Category = require("../models/category");
+const Instrument = require("../models/instrument");
 
-exports.category_list = (req, res) => {
-  res.send("category list")
+// List all categories
+exports.category_list = (req, res, next) => {
+  Category.find().exec((err, categories) => {
+    if (err){
+      return next(err);
+    }
+    res.render('categories_list', { title: "All instrument categories", categories})
+  })
 };
 
-exports.category_detail = (req, res) => {
-  res.send("category detail")
+// Display details about a particular category
+exports.category_detail = (req, res, next) => {
+  // Get category and instruments that belong to it
+  async.parallel({
+    category(callback){
+      Category.findById(req.params.id)
+        .exec(callback)
+    },
+    instruments(callback){
+      Instrument.find({categories: { $elemMatch: { $eq: req.params.id}}})
+        .exec(callback)
+    }
+  },
+  (err, results) => {
+    if (err){
+      return next(err)
+    };
+    // If no such category exists, throw error
+    if (results.category === null){
+      const newErr = new Error("Category not found")
+      newErr.status = 404;
+      return next(newErr);
+    }
+    // if successful, render
+    res.render("category_detail", {
+      title: "Category detail",
+      category: results.category,
+      instruments: results.instruments,
+    })
+  })
 };
 
 exports.category_create_get = (req, res) => {
