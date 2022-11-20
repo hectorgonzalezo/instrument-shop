@@ -15,14 +15,14 @@ block content
       input#model(type="text" name="model" value=(instrument === undefined ? "" : instrument.model))
     .input_wrapper
       label(for="description") Description:
-      textarea#description(name="description" maxlength= "100")= (instrument === undefined ? "" : instrument.description)
+      textarea#description(name="description" maxlength= "300")= (instrument === undefined ? "" : instrument.description)
     .input_wrapper
       label(for="tuning") Tuning:
       select#tuning(name="tuning")
         option(value='') Key
         each letter in ["A", "B", "C", "D", "E", "F", "G"]
           each accidental in ["", "b", "#"]
-            option(value=letter)= `${letter}${accidental}`
+            option(value=letter selected=(instrument !== undefined && instrument.tuning === `${letter}${accidental}`))= `${letter}${accidental}`
     .input_wrapper
       label(for="price") Price*:
       input#price(type="number" name="price" min="1" value=(instrument === undefined ? "" : instrument.price) required)
@@ -33,9 +33,9 @@ block content
       fieldset 
         legend Categories*:
           each category in categories
-            input(type="checkbox" id=`${category.name}-category` name=`${category.name}-category` value=`${category.name}-category` checked=(instrument.categories.some((instrumentCategory) => instrumentCategory.name === category.name)))
+            input(type="checkbox" id=`${category.name}-category` name=`${category.name}-category` value=`${category.name}-category` checked=(instrument !== undefined && instrument.categories !== undefined && instrument.categories.some((instrumentCategory) => instrumentCategory.name === category.name)))
             label(for= `${category.name}-category`)= category.name
-    button(type="submit") Create
+    button(type="submit")= title 
 
     if errors
       ul

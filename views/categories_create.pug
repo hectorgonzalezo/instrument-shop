@@ -10,7 +10,7 @@ block content
     .input_wrapper
       label(for="descripton") Category description:
       textarea#description(type="text" name="description" minlength="3" maxlength="100" placeholder="description" required)= (category === undefined ? '' : category.description)
-    button(type="submit") Create
+    button(type="submit")= title
 
   if errors
     ul
