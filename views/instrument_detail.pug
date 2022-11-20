@@ -1,6 +1,6 @@
 extends layout
 
-block content 
+block content
   h1= title
   main
     .instrument
@@ -16,6 +16,8 @@ block content
       p= `$${instrument.price}`
       p= `In stock: ${instrument.stock}`
   a(href=`/catalog/instruments/${instrument._id}/delete`) 
-    button(type="button" ) Delete
+    |
+    button(type="button") Delete
   a(href=`/catalog/instruments/${instrument._id}/update`) 
+    |
     button(type="button") Update

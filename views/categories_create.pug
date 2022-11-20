@@ -1,18 +1,34 @@
-extends layout 
+extends layout
 
-block content 
+block content
   h1= title
   p Required fields are marked with *
-  form(method="POST" action="") 
+  form(method="POST", action="") 
+    |
     .input_wrapper
       label(for="name") Category name*:
-      input#name(type="text" name="name" minlength="3" maxlength="25" value=(category === undefined ? '' : category.name) placeholder="name" required)
+      input#name(
+        type="text",
+        name="name",
+        minlength="3",
+        maxlength="25",
+        value=category === undefined ? "" : category.name,
+        placeholder="name",
+        required
+      )
     .input_wrapper
       label(for="descripton") Category description:
-      textarea#description(type="text" name="description" minlength="3" maxlength="100" placeholder="description" required)= (category === undefined ? '' : category.description)
+      textarea#description(
+        type="text",
+        name="description",
+        minlength="3",
+        maxlength="100",
+        placeholder="description",
+        required
+      )= category === undefined ? "" : category.description
     button(type="submit")= title
 
   if errors
     ul
-      for error in errors
+      each error in errors
         li!= error.msg

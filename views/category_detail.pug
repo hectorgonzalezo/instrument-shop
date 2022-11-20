@@ -1,13 +1,14 @@
 extends layout
 
-block content 
+block content
   h1= title
   .category
-    h1= category.name 
+    h1= category.name
     p= category.description
   main
     each instrument in instruments
       a(href=`/catalog/instruments/${instrument._id}`) 
+        |
         .item_small
           h1= `${instrument.name} - ${instrument.brand}`
           h2= instrument.model
@@ -20,6 +21,8 @@ block content
           p= `$${instrument.price}`
 
   a(href=`/catalog/categories/${category._id}/delete`) 
-    button(type="button" ) Delete
+    |
+    button(type="button") Delete
   a(href=`/catalog/categories/${category._id}/update`) 
+    |
     button(type="button") Update

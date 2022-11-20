@@ -1,43 +1,84 @@
-extends layout 
+extends layout
 
-block content 
+block content
   h1= title
   p Required fields are marked with *
-  form(method="POST" action="") 
+  form(method="POST", action="") 
+    |
     .input_wrapper
       label(for="name") Name*:
-      input#name(type="text" name="name" minlength="3" maxlength="25" value=(instrument === undefined ? "" : instrument.name) required)
+      input#name(
+        type="text",
+        name="name",
+        minlength="3",
+        maxlength="25",
+        value=instrument === undefined ? "" : instrument.name,
+        required
+      )
     .input_wrapper
       label(for="brand") Brand*:
-      input#brand(type="text" name="brand" minlength="3" maxlength="25" value=(instrument === undefined ? "" : instrument.brand) required)
+      input#brand(
+        type="text",
+        name="brand",
+        minlength="3",
+        maxlength="25",
+        value=instrument === undefined ? "" : instrument.brand,
+        required
+      )
     .input_wrapper
       label(for="model") Model:
-      input#model(type="text" name="model" value=(instrument === undefined ? "" : instrument.model))
+      input#model(
+        type="text",
+        name="model",
+        value=instrument === undefined ? "" : instrument.model
+      )
     .input_wrapper
       label(for="description") Description:
-      textarea#description(name="description" maxlength= "300")= (instrument === undefined ? "" : instrument.description)
+      textarea#description(name="description", maxlength="300")= instrument === undefined ? "" : instrument.description
     .input_wrapper
       label(for="tuning") Tuning:
       select#tuning(name="tuning")
-        option(value='') Key
+        option(value="") Key
         each letter in ["A", "B", "C", "D", "E", "F", "G"]
           each accidental in ["", "b", "#"]
-            option(value=letter selected=(instrument !== undefined && instrument.tuning === `${letter}${accidental}`))= `${letter}${accidental}`
+            option(
+              value=letter,
+              selected=instrument !== undefined && instrument.tuning === `${letter}${accidental}`
+            )= `${letter}${accidental}`
     .input_wrapper
       label(for="price") Price*:
-      input#price(type="number" name="price" min="1" value=(instrument === undefined ? "" : instrument.price) required)
+      input#price(
+        type="number",
+        name="price",
+        min="1",
+        value=instrument === undefined ? "" : instrument.price,
+        required
+      )
     .input_wrapper
       label(for="stock") Stock*:
-      input#stock(type="number" name="stock" min="1" value=(instrument === undefined ? "1" : instrument.stock) required)
+      input#stock(
+        type="number",
+        name="stock",
+        min="1",
+        value=instrument === undefined ? "1" : instrument.stock,
+        required
+      )
     .input_wrapper
       fieldset 
+        |
         legend Categories*:
           each category in categories
-            input(type="checkbox" id=`${category.name}-category` name=`${category.name}-category` value=`${category.name}-category` checked=(instrument !== undefined && instrument.categories !== undefined && instrument.categories.some((instrumentCategory) => instrumentCategory.name === category.name)))
-            label(for= `${category.name}-category`)= category.name
-    button(type="submit")= title 
+            input(
+              type="checkbox",
+              id=`${category.name}-category`,
+              name=`${category.name}-category`,
+              value=`${category.name}-category`,
+              checked=instrument !== undefined && instrument.categories !== undefined && instrument.categories.some((instrumentCategory) => instrumentCategory.name === category.name)
+            )
+            label(for=`${category.name}-category`)= category.name
+    button(type="submit")= title
 
     if errors
       ul
-        for error in errors
+        each error in errors
           li!= error.msg

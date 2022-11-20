@@ -1,13 +1,15 @@
 extends layout
 
-block content 
+block content
   h1= title
   main
     a(href="/catalog/instruments/create") 
+      |
       .item_small_add
         h1 Add new
     each instrument in instruments
       a(href=`/catalog/instruments/${instrument._id}`) 
+        |
         .item_small
           h1= `${instrument.name} - ${instrument.brand}`
           h2= instrument.model
