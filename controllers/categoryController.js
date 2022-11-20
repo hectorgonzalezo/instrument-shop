@@ -45,6 +45,7 @@ exports.category_detail = (req, res, next) => {
 };
 
 exports.category_create_get = (req, res) => {
+  console.log(req)
   res.send("category create get")
 };
 

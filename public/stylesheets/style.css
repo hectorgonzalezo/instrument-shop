@@ -1,22 +1,28 @@
 @import url(./reset.css);
-.item, .item_small {
+.item, .item_small, .item_small_add {
   display: grid;
   padding: 10px;
   gap: 10px;
   align-items: center; }
-  .item h1, .item_small h1 {
+  .item h1, .item_small h1, .item_small_add h1 {
     font-size: 2rem;
     font-weight: 500; }
-  .item h2, .item_small h2 {
+  .item h2, .item_small h2, .item_small_add h2 {
     font-size: 1.5rem;
     font-style: italic; }
 
-.item_small {
+.item_small, .item_small_add {
   background-color: #646f58ff;
   color: white;
   border-radius: 1rem;
   box-shadow: 3px 3px 7px black;
   max-width: 400px; }
+
+.item_small_add {
+  background-color: #dde392ff;
+  color: black;
+  width: 50%;
+  justify-items: center; }
 
 :root {
   font-size: clamp(13px, 3vw, 16px); }
@@ -37,7 +43,10 @@ a {
 main {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  align-items: center;
   gap: 30px; }
+  main > a:first-child {
+    justify-self: center; }
 
 .content {
   background-color: #afbe8fff; }
