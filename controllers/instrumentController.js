@@ -1,4 +1,5 @@
 const { body, validationResult } = require("express-validator");
+const async = require("async");
 const Instrument = require("../models/instrument");
 const Category = require("../models/category");
 
@@ -142,8 +143,28 @@ exports.instrument_create_post = [
     }
 ]
 
-exports.instrument_update_get = (req, res) => {
-  res.send("Instrument update get")
+exports.instrument_update_get = (req, res, next) => {
+  async.parallel(
+    {
+      instrument(callback){
+        Instrument.findById(req.params.id).populate("categories").exec(callback);
+      },
+      categories(callback){
+        Category.find().exec(callback);
+      }
+    },
+      (err, results) => {
+        if (err) {
+          return next(err);
+        }
+
+        res.render("instruments_create", {
+          title: "Update instrument",
+          instrument: results.instrument,
+          categories: results.categories,
+        });
+      }
+  )
 };
 
 exports.instrument_update_post = (req, res) => {

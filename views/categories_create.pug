@@ -9,9 +9,9 @@ block content
       input#name(type="text" name="name" minlength="3" maxlength="25" value=(category === undefined ? '' : category.name) placeholder="name" required)
     .input_wrapper
       label(for="descripton") Category description:
-      input#description(type="text" name="description" minlength="3" maxlength="100" value=(category === undefined ? '' : category.description) placeholder="description" required)
-    button(type="submit") Create*:
-  
+      textarea#description(type="text" name="description" minlength="3" maxlength="100" placeholder="description" required)= (category === undefined ? '' : category.description)
+    button(type="submit") Create
+
   if errors
     ul
       for error in errors

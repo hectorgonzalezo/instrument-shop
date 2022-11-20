@@ -15,3 +15,7 @@ block content
             dd= category.name
       p= `$${instrument.price}`
       p= `In stock: ${instrument.stock}`
+  a(href=`/catalog/instruments/${instrument._id}/delete`) 
+    button(type="button" ) Delete
+  a(href=`/catalog/instruments/${instrument._id}/update`) 
+    button(type="button") Update

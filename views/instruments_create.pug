@@ -33,7 +33,7 @@ block content
       fieldset 
         legend Categories*:
           each category in categories
-            input(type="checkbox" id=`${category.name}-category` name=`${category.name}-category` value=`${category.name}-category`)
+            input(type="checkbox" id=`${category.name}-category` name=`${category.name}-category` value=`${category.name}-category` checked=(instrument.categories.some((instrumentCategory) => instrumentCategory.name === category.name)))
             label(for= `${category.name}-category`)= category.name
     button(type="submit") Create
 

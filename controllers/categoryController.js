@@ -97,13 +97,57 @@ exports.category_create_post = [
   }
 ]
 
-exports.category_update_get = (req, res) => {
-  res.send("category update get")
-};
+// Update a category
+// shows category create page and populates it with previous category data
+exports.category_update_get = (req, res) =>{
+  Category.findById(req.params.id).exec((err, category) => {
+    res.render("categories_create", { title: "Update category", category });
+  })
+}
 
-exports.category_update_post = (req, res) => {
-  res.send("category update post")
-};
+// Similar to create_post, but finds the category by id before updating it
+exports.category_update_post = [
+  body("name", "Category name required")
+    .trim()
+    .isLength({ min: 3, max: 25 })
+    .withMessage("Category name should be between 3 and 25 characters long")
+    .escape()
+    .isAlpha()
+    .withMessage("Category name can only include letters"),
+  body("description", "Category description required")
+    .trim()
+    .isLength({ min: 3, max: 100 })
+    .withMessage("Category description should be between 3 and 100 characters long")
+    .escape(),
+  (req, res, next) =>{
+    // Get validations
+    const errors = validationResult(req);
+
+    // If there are any errors, rerender form with previous values and error messages
+    if(!errors.isEmpty()) {
+      res.render("categories_create", {
+        title: "Create new category",
+        category: req.body,
+        errors: errors.array(),
+      })
+      return;
+    }
+
+    // If it's valid, add the category to database and open record
+    const category = new Category({
+      name: req.body.name,
+      description: req.body.description,
+      _id: req.params.id,
+    })
+
+    Category.findByIdAndUpdate(req.params.id, category, {}, (err,  updatedCategory) => {
+      if (err) {
+        return next(err);
+      }
+      res.redirect(updatedCategory.url);
+    })
+  }
+]
 
 exports.category_delete_get = (req, res) => {
   res.send("category delete get")

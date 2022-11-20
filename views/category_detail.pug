@@ -18,3 +18,8 @@ block content
               each category in instrument.categories
                 dd= category.name
           p= `$${instrument.price}`
+
+  a(href=`/catalog/categories/${category._id}/delete`) 
+    button(type="button" ) Delete
+  a(href=`/catalog/categories/${category._id}/update`) 
+    button(type="button") Update
