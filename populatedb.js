@@ -126,7 +126,7 @@ function createInstruments(cb) {
 						"Eastman Strings",
 						"Galiano",
 						"Our performance cellos are painstakingly antiqued by hand. The result is an eye-catching instrument that sounds full and resonant.",
-						"",
+						undefined,
 						[categoriesArr[0]._id],
 						3350,
 						2,

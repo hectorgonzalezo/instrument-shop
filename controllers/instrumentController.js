@@ -51,27 +51,27 @@ exports.instrument_create_post = [
     .withMessage("Instrument name must be between 3 and 25 characters long")
     .isAlpha()
     .withMessage("Instrument name can only contain letters or numbers"),
-  body("brand")
-    .optional({ checkFalsy: true })
+  body("brand", "Instrument brand required")
     .trim()
     .escape()
+    .isLength({ min: 3, max: 25 })
+    .withMessage("Instrument brand must be between 3 and 25 characters long")
     .isAlpha()
     .withMessage("Instrument brand can only contain letters or numbers"),
   body("model")
+    .optional({ checkFalsy: true })
     .trim()
     .escape()
     .isAlphanumeric()
     .withMessage("Instrument model can only contain letters or numbers"),
   body("description", "Instrument description required")
+    .optional({ checkFalsy: true })
     .trim()
     .escape()
-    .isLength({ min: 3,  max: 100 })
-    .withMessage("Instrument description must be between 3 and 100 characters long"),
+    .isLength({ max: 100 })
+    .withMessage("Instrument description must be at most 100 characters long"),
   body("tuning")
-    .optional({ setFalsy: true })
-    .trim()
-    .custom((value) => /[A-G][b#]?/.test(value))
-    .withMessage("Wrong tunning format, it should be [key][accidental]. Example: C#"),
+    .trim(),
   body("price")
     .trim()
     .escape()
@@ -89,17 +89,20 @@ exports.instrument_create_post = [
       const errors = validationResult(req);
       // get chosen fields
       let categoriesArray = Object.keys(req.body).filter((field) => /.*-category/.test(field));
-      console.log(req.body)
+      console.log(categoriesArray.length);
+      console.log(errors.array())
   
       // If there are any errors, rerender form with previous values and error messages
       // or if no category is chosen
       if(!errors.isEmpty() || categoriesArray.length < 1) {
+        const noCategoryError = { msg: "Choose at least one category"}
+
         Category.find().exec((err, categories) => {
           res.render("instruments_create", {
             title: "Create new instrument",
             instrument: req.body,
             categories,
-            errors: [...errors.array(), new Error("Choose at least one category")],
+            errors: categoriesArray.length < 1 ? [...errors.array(), noCategoryError] :  errors.array(),
           });
         })
         return;
@@ -118,11 +121,11 @@ exports.instrument_create_post = [
       // If it's valid, add the category to database and open record
       const instrument = new Instrument({
         name: req.body.name,
-        brand: req.body.brand || '',
-        model: req.body.model,
-        description: req.body.description,
+        brand: req.body.brand,
+        ...(req.body.model !== '') && { model: req.body.model },
+        ...(req.body.description !== '') && { description: req.body.description },
+        ...(req.body.tuning !== '') && { tuning: req.body.tuning },
         categories: categoriesIds,
-        tuning: req.body.tuning,
         price: req.body.price,
         stock: req.body.stock,
       });

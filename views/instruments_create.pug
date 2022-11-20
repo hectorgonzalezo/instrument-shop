@@ -8,18 +8,18 @@ block content
       label(for="name") Name*:
       input#name(type="text" name="name" minlength="3" maxlength="25" value=(instrument === undefined ? "" : instrument.name) required)
     .input_wrapper
-      label(for="brand") Brand:
-      input#brand(type="text" brand="brand" value=(instrument === undefined ? "" : instrument.brand) required)
+      label(for="brand") Brand*:
+      input#brand(type="text" name="brand" minlength="3" maxlength="25" value=(instrument === undefined ? "" : instrument.brand) required)
     .input_wrapper
       label(for="model") Model:
-      input#model(type="text" model="model" value=(instrument === undefined ? "" : instrument.model))
+      input#model(type="text" name="model" value=(instrument === undefined ? "" : instrument.model))
     .input_wrapper
-      label(for="description") Description*:
-      textarea#description(name="description" minlength="5" maxlength= "100" required)= (instrument === undefined ? "" : instrument.description)
+      label(for="description") Description:
+      textarea#description(name="description" maxlength= "100")= (instrument === undefined ? "" : instrument.description)
     .input_wrapper
       label(for="tuning") Tuning:
       select#tuning(name="tuning")
-        option(value="") Key
+        option(value='') Key
         each letter in ["A", "B", "C", "D", "E", "F", "G"]
           each accidental in ["", "b", "#"]
             option(value=letter)= `${letter}${accidental}`
@@ -31,7 +31,7 @@ block content
       input#stock(type="number" name="stock" min="1" value=(instrument === undefined ? "1" : instrument.stock) required)
     .input_wrapper
       fieldset 
-        legend Categories:
+        legend Categories*:
           each category in categories
             input(type="checkbox" id=`${category.name}-category` name=`${category.name}-category` value=`${category.name}-category`)
             label(for= `${category.name}-category`)= category.name

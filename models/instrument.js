@@ -4,13 +4,13 @@ const { Schema } = mongoose;
 
 const InstrumentModelSchema = new Schema({
   name: { type: String, required: true },
-  brand: { type: String, required: true},
-  model: String,
+  brand: { type: String, required: true },
+  model: { type: String, required: false} ,
   description: {type: String, default: ''},
   tuning: {
     type: String, 
     validate: {
-      validator: (val) => /[a-gA-G]*[\b|\#]*/.test(val),
+      validator: (val) => /[A-G][b|#]?/.test(val),
       message: "Incorrect tuning format"
     },
     required: false
