@@ -35,6 +35,27 @@ main {
 
 .content {
   background-color: $laurel-green;
+  display: flex;
+  flex-direction: column;
+}
+
+form{
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  gap: 15px;
+  .input_wrapper{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    input{
+      margin-left: auto;
+    }
+  }
+  button{
+    align-self: center;
+  }
 }
 
 footer {

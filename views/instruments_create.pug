@@ -1,0 +1,36 @@
+extends layout 
+
+block content 
+  h1 Create new instrument category
+  form(method="POST" action="") 
+    .input_wrapper
+      label(for="name") Name:
+      input#name(type="text" name="name")
+    .input_wrapper
+      label(for="brand") Brand:
+      input#brand(type="text" brand="brand")
+    .input_wrapper
+      label(for="model") Model:
+      input#model(type="text" model="model")
+    .input_wrapper
+      label(for="description") Description :
+      textarea#description(name="description")
+    .input_wrapper
+      label(for="tuning") Tuning :
+      select#tuning(name="tuning")
+        option(value="") Choose a tuning(optional)
+        each letter in [A, B, C, D, E, F, G]
+          option(value=letter) #{letter}
+    .input_wrapper
+      label(for="price") Price :
+      input#price(type="number" tuning="price")
+    .input_wrapper
+      label(for="stock") Stock :
+      input#stock(type="number" tuning="stock")
+    .input_wrapper
+      label(for="categories") Categories :
+      select#categories(name="categories")
+        option(value="") Choose at least one category
+        each category in categories
+          option(value=category) #{category}
+    button(type="submit") Create

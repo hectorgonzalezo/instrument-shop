@@ -1,4 +1,5 @@
 const async = require("async");
+const { body, validationResult } = require("express-validator");
 const Category = require("../models/category");
 const Instrument = require("../models/instrument");
 
@@ -45,13 +46,51 @@ exports.category_detail = (req, res, next) => {
 };
 
 exports.category_create_get = (req, res) => {
-  console.log(req)
-  res.send("category create get")
-};
+  res.render("categories_create");
+}
 
-exports.category_create_post = (req, res) => {
-  res.send("category create post")
-};
+exports.category_create_post = [
+  body("name", "Category name required")
+    .trim()
+    .isLength({ min: 3 })
+    .withMessage("Category name should be at least 3 characters long")
+    .escape()
+    .isAlpha()
+    .withMessage("Category name can only include letters"),
+  body("description", "Category description required")
+    .trim()
+    .isLength({ min: 3 })
+    .withMessage("Category description should be at least 3 characters long")
+    .escape(),
+  (req, res, next) =>{
+    // Get validations
+    const errors = validationResult(req);
+
+    // If there are any errors, rerender form with previous values and error messages
+    if(!errors.isEmpty()) {
+      res.render("categories_create", {
+        category: req.body,
+        errors: errors.array(),
+      })
+      return;
+    }
+
+    // If it's valid, add the category to database and open record
+    const category = new Category({
+      name: req.body.name,
+      description: req.body.description,
+    })
+
+    category.save((err) => {
+      if (err) {
+        return next(err);
+      }
+
+      // If created sucessfully, go to category page
+      res.redirect(category.url);
+    })
+  }
+]
 
 exports.category_update_get = (req, res) => {
   res.send("category update get")

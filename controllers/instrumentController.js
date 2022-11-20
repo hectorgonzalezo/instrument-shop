@@ -1,5 +1,6 @@
 const Instrument = require("../models/instrument");
 const Category = require("../models/category");
+const { body, validationResult } = require("express-validator");
 
 exports.instrument_list = (req, res, next) => {
   Instrument.find()
@@ -24,7 +25,7 @@ exports.instrument_detail = (req, res, next) => {
 };
 
 exports.instrument_create_get = (req, res) => {
-  res.send("Instrument create get")
+  res.render("instruments_create")
 };
 
 exports.instrument_create_post = (req, res) => {

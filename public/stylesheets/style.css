@@ -49,7 +49,24 @@ main {
     justify-self: center; }
 
 .content {
-  background-color: #afbe8fff; }
+  background-color: #afbe8fff;
+  display: flex;
+  flex-direction: column; }
+
+form {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  gap: 15px; }
+  form .input_wrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px; }
+    form .input_wrapper input {
+      margin-left: auto; }
+  form button {
+    align-self: center; }
 
 footer {
   display: flex;
