@@ -53,6 +53,9 @@ main {
   display: flex;
   flex-direction: column; }
 
+textarea {
+  resize: vertical; }
+
 form {
   padding: 10px;
   display: flex;
@@ -63,7 +66,7 @@ form {
     display: flex;
     align-items: center;
     gap: 5px; }
-    form .input_wrapper input {
+    form .input_wrapper > *:nth-child(2) {
       margin-left: auto; }
   form button {
     align-self: center; }

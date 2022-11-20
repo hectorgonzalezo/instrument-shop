@@ -1,36 +1,43 @@
 extends layout 
 
 block content 
-  h1 Create new instrument category
+  h1= title
+  p Required fields are marked with *
   form(method="POST" action="") 
     .input_wrapper
-      label(for="name") Name:
-      input#name(type="text" name="name")
+      label(for="name") Name*:
+      input#name(type="text" name="name" minlength="3" maxlength="25" value=(instrument === undefined ? "" : instrument.name) required)
     .input_wrapper
       label(for="brand") Brand:
-      input#brand(type="text" brand="brand")
+      input#brand(type="text" brand="brand" value=(instrument === undefined ? "" : instrument.brand) required)
     .input_wrapper
       label(for="model") Model:
-      input#model(type="text" model="model")
+      input#model(type="text" model="model" value=(instrument === undefined ? "" : instrument.model))
     .input_wrapper
-      label(for="description") Description :
-      textarea#description(name="description")
+      label(for="description") Description*:
+      textarea#description(name="description" minlength="5" maxlength= "100" required)= (instrument === undefined ? "" : instrument.description)
     .input_wrapper
-      label(for="tuning") Tuning :
+      label(for="tuning") Tuning:
       select#tuning(name="tuning")
-        option(value="") Choose a tuning(optional)
-        each letter in [A, B, C, D, E, F, G]
-          option(value=letter) #{letter}
+        option(value="") Key
+        each letter in ["A", "B", "C", "D", "E", "F", "G"]
+          each accidental in ["", "b", "#"]
+            option(value=letter)= `${letter}${accidental}`
     .input_wrapper
-      label(for="price") Price :
-      input#price(type="number" tuning="price")
+      label(for="price") Price*:
+      input#price(type="number" name="price" min="1" value=(instrument === undefined ? "" : instrument.price) required)
     .input_wrapper
-      label(for="stock") Stock :
-      input#stock(type="number" tuning="stock")
+      label(for="stock") Stock*:
+      input#stock(type="number" name="stock" min="1" value=(instrument === undefined ? "1" : instrument.stock) required)
     .input_wrapper
-      label(for="categories") Categories :
-      select#categories(name="categories")
-        option(value="") Choose at least one category
-        each category in categories
-          option(value=category) #{category}
+      fieldset 
+        legend Categories:
+          each category in categories
+            input(type="checkbox" id=`${category.name}-category` name=`${category.name}-category` value=`${category.name}-category`)
+            label(for= `${category.name}-category`)= category.name
     button(type="submit") Create
+
+    if errors
+      ul
+        for error in errors
+          li!= error.msg

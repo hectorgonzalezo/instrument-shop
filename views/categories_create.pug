@@ -1,15 +1,16 @@
 extends layout 
 
 block content 
-  h1 Create new instrument category
+  h1= title
+  p Required fields are marked with *
   form(method="POST" action="") 
     .input_wrapper
-      label(for="name") Category name:
-      input#name(type="text" name="name" value=(category === undefined ? '' : category.name) placeholder="name" required)
+      label(for="name") Category name*:
+      input#name(type="text" name="name" minlength="3" maxlength="25" value=(category === undefined ? '' : category.name) placeholder="name" required)
     .input_wrapper
       label(for="descripton") Category description:
-      input#description(type="text" name="description" value=(category === undefined ? '' : category.description) placeholder="description" required)
-    button(type="submit") Create
+      input#description(type="text" name="description" minlength="3" maxlength="100" value=(category === undefined ? '' : category.description) placeholder="description" required)
+    button(type="submit") Create*:
   
   if errors
     ul

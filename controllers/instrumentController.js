@@ -1,7 +1,8 @@
+const { body, validationResult } = require("express-validator");
 const Instrument = require("../models/instrument");
 const Category = require("../models/category");
-const { body, validationResult } = require("express-validator");
 
+// Display all instruments
 exports.instrument_list = (req, res, next) => {
   Instrument.find()
     .populate("categories")
@@ -13,6 +14,7 @@ exports.instrument_list = (req, res, next) => {
     })
 };
 
+// Show a details about a single instrument
 exports.instrument_detail = (req, res, next) => {
   Instrument.findById(req.params.id)
     .populate("categories")
@@ -20,17 +22,122 @@ exports.instrument_detail = (req, res, next) => {
       if (err){
         return next(err);
       }
-      res.render("instrument_detail", {instrument})
+      res.render("instrument_detail", {
+        title: "Instrument display",
+        instrument,
+      });
     })
 };
 
+// Display form to create a new instrument
 exports.instrument_create_get = (req, res) => {
-  res.render("instruments_create")
+  // get all categories to render in instrument form
+  Category.find().exec((err, categories) => {
+    res.render("instruments_create", {
+      title: "Create new instrument",
+      categories,
+    });
+  })
 };
 
-exports.instrument_create_post = (req, res) => {
-  res.send("Instrument create post")
-};
+// Manages sending create instrument form
+// If data isn't correct, display it again
+// otherwise display the instrument page
+exports.instrument_create_post = [
+  body("name", "Instrument name required")
+    .trim()
+    .escape()
+    .isLength({ min: 3, max: 25 })
+    .withMessage("Instrument name must be between 3 and 25 characters long")
+    .isAlpha()
+    .withMessage("Instrument name can only contain letters or numbers"),
+  body("brand")
+    .optional({ checkFalsy: true })
+    .trim()
+    .escape()
+    .isAlpha()
+    .withMessage("Instrument brand can only contain letters or numbers"),
+  body("model")
+    .trim()
+    .escape()
+    .isAlphanumeric()
+    .withMessage("Instrument model can only contain letters or numbers"),
+  body("description", "Instrument description required")
+    .trim()
+    .escape()
+    .isLength({ min: 3,  max: 100 })
+    .withMessage("Instrument description must be between 3 and 100 characters long"),
+  body("tuning")
+    .optional({ setFalsy: true })
+    .trim()
+    .custom((value) => /[A-G][b#]?/.test(value))
+    .withMessage("Wrong tunning format, it should be [key][accidental]. Example: C#"),
+  body("price")
+    .trim()
+    .escape()
+    .toInt()
+    .isInt({ min: 1 })
+    .withMessage("Price should be at least 1"),
+  body("stock")
+    .trim()
+    .escape()
+    .toInt()
+    .isInt({ min: 1 })
+    .withMessage("Stock should be at least 1"),
+    (req, res, next) =>{
+      // Get validations
+      const errors = validationResult(req);
+      // get chosen fields
+      let categoriesArray = Object.keys(req.body).filter((field) => /.*-category/.test(field));
+      console.log(req.body)
+  
+      // If there are any errors, rerender form with previous values and error messages
+      // or if no category is chosen
+      if(!errors.isEmpty() || categoriesArray.length < 1) {
+        Category.find().exec((err, categories) => {
+          res.render("instruments_create", {
+            title: "Create new instrument",
+            instrument: req.body,
+            categories,
+            errors: [...errors.array(), new Error("Choose at least one category")],
+          });
+        })
+        return;
+      }
+
+      // Make an array full of categories
+
+      categoriesArray = categoriesArray.map((category) => category.match(/.*(?=-category)/)[0])
+      // look for chosen categories, add them to array and then save instrument
+      Category.find({ name: { $in: categoriesArray }}).exec((err, categories) => {
+        if (err) {
+          return next(err);
+        }
+      const categoriesIds = categories.map((category) => category._id)
+  
+      // If it's valid, add the category to database and open record
+      const instrument = new Instrument({
+        name: req.body.name,
+        brand: req.body.brand || '',
+        model: req.body.model,
+        description: req.body.description,
+        categories: categoriesIds,
+        tuning: req.body.tuning,
+        price: req.body.price,
+        stock: req.body.stock,
+      });
+
+      instrument.save((instrumentErr) => {
+        if (instrumentErr) {
+          return next(instrumentErr);
+        }
+  
+        // If created sucessfully, go to category page
+        res.redirect(instrument.url);
+      })
+    })
+    }
+]
 
 exports.instrument_update_get = (req, res) => {
   res.send("Instrument update get")

@@ -45,22 +45,26 @@ exports.category_detail = (req, res, next) => {
   })
 };
 
+// Display form to create new category
 exports.category_create_get = (req, res) => {
-  res.render("categories_create");
+  res.render("categories_create", {title: "Create new category"});
 }
 
+// Manages sending create category form
+// If data isn't correct, display it again
+// otherwise display the category page
 exports.category_create_post = [
   body("name", "Category name required")
     .trim()
-    .isLength({ min: 3 })
-    .withMessage("Category name should be at least 3 characters long")
+    .isLength({ min: 3, max: 25 })
+    .withMessage("Category name should be between 3 and 25 characters long")
     .escape()
     .isAlpha()
     .withMessage("Category name can only include letters"),
   body("description", "Category description required")
     .trim()
-    .isLength({ min: 3 })
-    .withMessage("Category description should be at least 3 characters long")
+    .isLength({ min: 3, max: 100 })
+    .withMessage("Category description should be between 3 and 100 characters long")
     .escape(),
   (req, res, next) =>{
     // Get validations
@@ -69,6 +73,7 @@ exports.category_create_post = [
     // If there are any errors, rerender form with previous values and error messages
     if(!errors.isEmpty()) {
       res.render("categories_create", {
+        title: "Create new category",
         category: req.body,
         errors: errors.array(),
       })
