@@ -15,9 +15,18 @@ block content
             dd= category.name
       p= `$${instrument.price}`
       p= `In stock: ${instrument.stock}`
-  a(href=`/catalog/instruments/${instrument._id}/delete`) 
-    |
-    button(type="button") Delete
-  a(href=`/catalog/instruments/${instrument._id}/update`) 
-    |
-    button(type="button") Update
+
+  if deleting !== undefined
+    h2 Are you sure you want to delete this instrument?
+    form(method="POST" action="") 
+      button(type="submit") Delete
+    a(href=`/catalog/instruments/${instrument._id}`) 
+      |
+      button(type="button") Go back
+  else
+    a(href=`/catalog/instruments/${instrument._id}/delete`) 
+      |
+      button(type="button") Delete
+    a(href=`/catalog/instruments/${instrument._id}/update`) 
+      |
+      button(type="button") Update

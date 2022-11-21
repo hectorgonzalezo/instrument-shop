@@ -149,10 +149,73 @@ exports.category_update_post = [
   }
 ]
 
-exports.category_delete_get = (req, res) => {
-  res.send("category delete get")
+// Ask for confirmation to delete category
+exports.category_delete_get = (req, res, next) => {
+  // Get category and instruments that belong to it
+  async.parallel({
+    category(callback){
+      Category.findById(req.params.id)
+        .exec(callback)
+    },
+    instruments(callback){
+      Instrument.find({categories: { $elemMatch: { $eq: req.params.id}}})
+        .exec(callback)
+    }
+  },
+  (err, results) => {
+    if (err){
+      return next(err)
+    };
+    // If no such category exists, throw error
+    if (results.category === null){
+      const newErr = new Error("Category not found")
+      newErr.status = 404;
+      return next(newErr);
+    }
+    // if successful, render
+    res.render("category_detail", {
+      title: "Category detail",
+      category: results.category,
+      instruments: results.instruments,
+      deleting: true,
+    })
+  })
 };
 
-exports.category_delete_post = (req, res) => {
-  res.send("category delete post")
-};
+// Delete category
+exports.category_delete_post = (req, res, next) => {
+  // look if theres any instrument that still contains this category
+  async.parallel({
+    category(callback) {
+      Category.findById(req.params.id).exec(callback);
+    },
+    instruments(callback) {
+      Instrument.find({ categories: req.params.id }).exec(callback);
+    },
+  },
+  (err, results) => {
+    if (err) {
+      return next(err);
+    }
+
+    // If there are any instruments in category ask the user to delete them
+    if (results.instruments.length > 0) {
+      res.render("category_detail", {
+        title: "Category detail",
+        category: results.category,
+        instruments: results.instruments,
+        deleting: true,
+      })
+
+    }
+
+    // If there are none, delete the category
+    Category.findByIdAndRemove(req.params.id).exec((categoryErr) => {
+      if (categoryErr) {
+        return next(categoryErr);
+      }
+      res.redirect("/catalog/categories")
+    })
+  }
+)
+}

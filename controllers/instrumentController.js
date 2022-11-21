@@ -280,10 +280,26 @@ body("stock")
   }
 ];
 
-exports.instrument_delete_get = (req, res) => {
-  res.send("Instrument delete get")
+exports.instrument_delete_get = (req, res, next) => {
+  Instrument.findById(req.params.id)
+    .populate("categories")
+    .exec((err, instrument) => {
+      if (err){
+        return next(err);
+      }
+      res.render("instrument_detail", {
+        title: "Instrument display",
+        instrument,
+        deleting: true,
+      });
+    })
 };
 
-exports.instrument_delete_post = (req, res) => {
-  res.send("Instrument delete post")
-};
+exports.instrument_delete_post = (req, res, next) =>{
+  Instrument.findByIdAndRemove(req.params.id).exec((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/catalog/instruments")
+  })
+}

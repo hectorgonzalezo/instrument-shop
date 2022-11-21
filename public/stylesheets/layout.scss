@@ -1,0 +1,80 @@
+@import "./reset.css";
+@import "variables";
+@import "item";
+
+:root {
+  font-size: clamp(13px, 3vw, 16px);
+}
+
+body {
+  display: grid;
+  grid-template-rows: 100px auto 50px;
+  height: 100vh;
+  & > * {
+    padding: 20px;
+  }
+}
+
+header {
+  background-color: $xanadu;
+}
+
+a {
+  text-decoration: none;
+}
+
+main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  align-items: center;
+  gap: 30px;
+  & > a:first-child {
+    justify-self: center;
+  }
+}
+
+.content {
+  background-color: $laurel-green;
+  display: flex;
+  flex-direction: column;
+}
+
+textarea{
+  resize: vertical;
+}
+
+form{
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  gap: 15px;
+  .input_wrapper{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    & > *:nth-child(2){
+      margin-left: auto;
+    }
+  }
+  button{
+    align-self: center;
+  }
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  background-color: $rifle-green;
+  color: white;
+
+  h1{
+    font-size: 1.5rem;
+  }
+
+  img{
+    width: 36px;
+  }
+}

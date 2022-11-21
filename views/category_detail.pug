@@ -19,10 +19,27 @@ block content
               each category in instrument.categories
                 dd= category.name
           p= `$${instrument.price}`
-
-  a(href=`/catalog/categories/${category._id}/delete`) 
-    |
-    button(type="button") Delete
-  a(href=`/catalog/categories/${category._id}/update`) 
-    |
-    button(type="button") Update
+  if deleting !== undefined
+    if instruments.length > 0
+      h2 First delete every instrument inside category!
+      a(href=`/catalog/categories/${category._id}/delete`) 
+        |
+        button(type="button") Delete
+      a(href=`/catalog/categories/${category._id}/update`) 
+        |
+        button(type="button") Update
+    else
+      h2 Are you sure you want to delete this category?
+      form(method="POST" action="") 
+        button(type="submit") Delete
+      a(href=`/catalog/categories/${category._id}`) 
+        |
+        button(type="button") Go back
+  else
+    a(href=`/catalog/categories/${category._id}/delete`) 
+      |
+      button(type="button") Delete
+    a(href=`/catalog/categories/${category._id}/update`) 
+      |
+      button(type="button") Update
+  
