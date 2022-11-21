@@ -3,16 +3,16 @@ html
   head
     title= title
     meta(charset="utf-8")
-    link(rel="stylesheet", href="/stylesheets/style.css")
+    link(rel="stylesheet", href="/stylesheets/layout.css")
     meta(name="viewport", content="width=device-width, initial-scale=1")
   body
     header
-      button
-        a(href="/catalog/instruments") View all instruments
-      button
-        a(href="/catalog/categories") View all categories
-      button
-        a(href="/") Home
+      a(href="/catalog/instruments")
+        button View all instruments
+      a(href="/catalog/categories")      
+        button  View all categories
+      a(href="/") 
+        button Home
     .content
       block content
     footer

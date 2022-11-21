@@ -9,7 +9,7 @@ exports.category_list = (req, res, next) => {
     if (err){
       return next(err);
     }
-    res.render('categories_list', { title: "All instrument categories", categories})
+    res.render('categories_list', { title: "All categories", categories})
   })
 };
 

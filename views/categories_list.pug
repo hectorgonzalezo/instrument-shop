@@ -4,9 +4,7 @@ block content
   h1= title
   main
     a(href="/catalog/categories/create") 
-      |
-      .item_small_add
-        h1 Add new
+      button Add new Category
     each category in categories
       a(href=`/catalog/categories/${category._id}`) 
         |

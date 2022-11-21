@@ -6,6 +6,35 @@
   font-size: clamp(13px, 3vw, 16px);
 }
 
+button{
+  border: none;
+  background-color: $true-blue;
+  color: white;
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  border-radius: 12px;
+  padding: 3px 8px 3px 8px;
+  box-shadow: 1px 1px 2px black;
+  position: relative;
+  &:hover{
+    background-color: $dark-cornflower-blue;
+    cursor: pointer;
+  }
+  &:active{
+    top: 1px;
+    left: 1px;
+  }
+}
+
+.title {
+  color: $oxford-blue-2;
+  font-size: 4rem;
+}
+
+.subtitle {
+  color: $dark-cornflower-blue;
+  font-size: 2.5rem;
+}
+
 body {
   display: grid;
   grid-template-rows: 100px auto 50px;
@@ -16,17 +45,30 @@ body {
 }
 
 header {
-  background-color: $xanadu;
+  background-color: $roman-silver;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
 }
 
 a {
   text-decoration: none;
 }
 
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.3rem;
+}
+
 main {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   align-items: center;
+  width: 100%;
   gap: 30px;
   & > a:first-child {
     justify-self: center;
@@ -34,8 +76,12 @@ main {
 }
 
 .content {
-  background-color: $laurel-green;
+  background-color: $manatee;
+  color: white;
   display: flex;
+  gap: 25px;
+  align-items: center;
+  justify-content: space-around;
   flex-direction: column;
 }
 
@@ -67,7 +113,7 @@ footer {
   justify-content: center;
   align-items: center;
   gap: 25px;
-  background-color: $rifle-green;
+  background-color: $dark-cornflower-blue;
   color: white;
 
   h1{

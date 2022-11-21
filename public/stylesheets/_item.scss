@@ -17,7 +17,7 @@
 
 .item_small{
   @extend .item;
-  background-color: $ebony;
+  background-color: $oxford-blue;
   color: white;
   border-radius: 1rem;
   box-shadow: 3px 3px 7px black;
@@ -26,8 +26,8 @@
 
 .item_small_add{
   @extend .item_small;
-    background-color: $green-yellow-crayola;
-    color: black;
+    background-color: $true-blue;
+    color: white;
     width: 50%;
     justify-items: center;
 }

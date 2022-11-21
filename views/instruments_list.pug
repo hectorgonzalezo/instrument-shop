@@ -4,9 +4,7 @@ block content
   h1= title
   main
     a(href="/catalog/instruments/create") 
-      |
-      .item_small_add
-        h1 Add new
+      button Add new Instrument
     each instrument in instruments
       a(href=`/catalog/instruments/${instrument._id}`) 
         |

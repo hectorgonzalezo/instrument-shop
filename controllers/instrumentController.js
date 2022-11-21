@@ -11,7 +11,7 @@ exports.instrument_list = (req, res, next) => {
       if (err){
         return next(err);
       }
-      res.render("instruments_list", { title: "all instruments", instruments });
+      res.render("instruments_list", { title: "All instruments", instruments });
     })
 };
 

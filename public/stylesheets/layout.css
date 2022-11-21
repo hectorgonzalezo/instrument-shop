@@ -12,20 +12,44 @@
     font-style: italic; }
 
 .item_small, .item_small_add {
-  background-color: #646f58ff;
+  background-color: #002855ff;
   color: white;
   border-radius: 1rem;
   box-shadow: 3px 3px 7px black;
   max-width: 400px; }
 
 .item_small_add {
-  background-color: #dde392ff;
-  color: black;
+  background-color: #0466c8ff;
+  color: white;
   width: 50%;
   justify-items: center; }
 
 :root {
   font-size: clamp(13px, 3vw, 16px); }
+
+button {
+  border: none;
+  background-color: #0466c8ff;
+  color: white;
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  border-radius: 12px;
+  padding: 3px 8px 3px 8px;
+  box-shadow: 1px 1px 2px black;
+  position: relative; }
+  button:hover {
+    background-color: #023e7dff;
+    cursor: pointer; }
+  button:active {
+    top: 1px;
+    left: 1px; }
+
+.title {
+  color: #001845ff;
+  font-size: 4rem; }
+
+.subtitle {
+  color: #023e7dff;
+  font-size: 2.5rem; }
 
 body {
   display: grid;
@@ -35,22 +59,37 @@ body {
     padding: 20px; }
 
 header {
-  background-color: #7d8570ff; }
+  background-color: #7d8597ff;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px; }
 
 a {
   text-decoration: none; }
+
+h1 {
+  font-size: 2rem; }
+
+h2 {
+  font-size: 1.3rem; }
 
 main {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   align-items: center;
+  width: 100%;
   gap: 30px; }
   main > a:first-child {
     justify-self: center; }
 
 .content {
-  background-color: #afbe8fff;
+  background-color: #979dacff;
+  color: white;
   display: flex;
+  gap: 25px;
+  align-items: center;
+  justify-content: space-around;
   flex-direction: column; }
 
 textarea {
@@ -76,11 +115,14 @@ footer {
   justify-content: center;
   align-items: center;
   gap: 25px;
-  background-color: #504b3aff;
+  background-color: #023e7dff;
   color: white; }
   footer h1 {
     font-size: 1.5rem; }
   footer img {
     width: 36px; }
+
+* {
+  outline: 1px dashed red; }
 
 /*# sourceMappingURL=layout.css.map */
