@@ -5,6 +5,9 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const sassMiddleware = require('node-sass-middleware');
 const mongoose = require("mongoose");
+const methodOverride = require("method-override");
+const multer = require("multer");
+const GridFsStorage = require("multer-gridfs-storage");
 
 const indexRouter = require('./routes/index');
 const catalogRouter = require('./routes/catalog');
@@ -17,6 +20,7 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -33,6 +37,7 @@ app.use(sassMiddleware({
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static('images'));
 
 app.use('/', indexRouter);
 app.use('/catalog', catalogRouter);

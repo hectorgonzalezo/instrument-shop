@@ -3,8 +3,11 @@ extends layout
 block content
   h1= title
   p Required fields are marked with *
-  form(method="POST", action="") 
+  form(method="POST", action="" enctype="multipart/form-data") 
     |
+    .input_wrapper 
+      label(for="image") Add instrument image
+      input#image(type="file" name="image" accept="image/jpeg")
     .input_wrapper
       label(for="name") Name*:
       input#name(

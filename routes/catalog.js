@@ -2,6 +2,19 @@ const express = require('express');
 
 const router = express.Router();
 
+const multer = require("multer");
+
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, '/images/items/')
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, file.originalname)
+//   }
+// })
+
+const upload = multer({ dest: 'images/items/' })
+
 const instrumentController = require('../controllers/instrumentController');
 const categoryController = require('../controllers/categoryController');
 
@@ -9,7 +22,7 @@ const categoryController = require('../controllers/categoryController');
 
 // routes to create instruments
 router.get('/instruments/create', instrumentController.instrument_create_get);
-router.post('/instruments/create', instrumentController.instrument_create_post);
+router.post('/instruments/create', upload.single("image"), instrumentController.instrument_create_post);
 
 // routes to update instruments
 router.get('/instruments/:id/update', instrumentController.instrument_update_get);

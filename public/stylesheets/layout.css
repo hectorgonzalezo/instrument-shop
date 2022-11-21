@@ -17,6 +17,8 @@
   border-radius: 1rem;
   box-shadow: 3px 3px 7px black;
   max-width: 400px; }
+  .item_small img, .item_small_add img {
+    max-width: 100px; }
 
 .item_small_add {
   background-color: #0466c8ff;
@@ -121,8 +123,5 @@ footer {
     font-size: 1.5rem; }
   footer img {
     width: 36px; }
-
-* {
-  outline: 1px dashed red; }
 
 /*# sourceMappingURL=layout.css.map */

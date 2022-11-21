@@ -13,6 +13,8 @@ block content
           h2= instrument.model
           if instrument.tuning !== undefined
             p.tuning= `Tuning: ${instrument.tuning}`
+          if instrument.imgUrl !== ''
+            img(src=instrument.imgUrl, alt=instrument.name)
           dl
             dt Categories:
               each category in instrument.categories

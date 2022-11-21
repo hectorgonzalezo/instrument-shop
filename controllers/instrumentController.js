@@ -1,5 +1,6 @@
 const { body, validationResult } = require("express-validator");
 const async = require("async");
+
 const Instrument = require("../models/instrument");
 const Category = require("../models/category");
 
@@ -107,8 +108,9 @@ exports.instrument_create_post = [
         return;
       }
 
-      // Make an array full of categories
+      console.log(req.file);
 
+      // Make an array full of categories
       categoriesArray = categoriesArray.map((category) => category.match(/.*(?=-category)/)[0])
       // look for chosen categories, add them to array and then save instrument
       Category.find({ name: { $in: categoriesArray }}).exec((err, categories) => {
@@ -124,6 +126,7 @@ exports.instrument_create_post = [
         ...(req.body.model !== '') && { model: req.body.model },
         ...(req.body.description !== '') && { description: req.body.description },
         ...(req.body.tuning !== '') && { tuning: req.body.tuning },
+        ...(req.file !== undefined) && { imgUrl: `/${req.file.path }` },
         categories: categoriesIds,
         price: req.body.price,
         stock: req.body.stock,

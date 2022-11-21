@@ -27,7 +27,7 @@ const Category = require('./models/category');
 const instrumentsArr = []
 const categoriesArr = []
 
-function instrumentCreate(name, brand, model,  description, tuning, categories, price, stock, cb) {
+function instrumentCreate(name, brand, model,  description, tuning, categories, price, stock, imgUrl, cb) {
   const instrument = new Instrument({
     name,
     brand,
@@ -37,6 +37,7 @@ function instrumentCreate(name, brand, model,  description, tuning, categories, 
     categories,
     price,
     stock,
+    imgUrl,
   });
 
   console.log(instrument)
@@ -104,6 +105,7 @@ function createInstruments(cb) {
 						[categoriesArr[2]._id],
 						8500,
 						1,
+            "/images/items/rigoutat-oboe.jpeg",
 						callback
 					)
 				},
@@ -117,6 +119,7 @@ function createInstruments(cb) {
 						[categoriesArr[2]._id],
 						3350,
 						2,
+            "/images/items/selmer-clarinet.jpeg",
 						callback
 					)
 				},
@@ -130,6 +133,7 @@ function createInstruments(cb) {
 						[categoriesArr[0]._id],
 						3350,
 						2,
+            "/images/items/eastman-cello.jpg",
 						callback
 					)
 				},
@@ -143,6 +147,7 @@ function createInstruments(cb) {
 						[categoriesArr[3]._id],
 						699,
 						5,
+            "/images/items/allora-trumpet.jpeg",
 						callback
 					)
 				},
