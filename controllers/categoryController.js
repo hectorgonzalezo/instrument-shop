@@ -66,6 +66,11 @@ exports.category_create_post = [
     .isLength({ min: 3, max: 100 })
     .withMessage("Category description should be between 3 and 100 characters long")
     .escape(),
+  body("password","Admin password required")
+    .trim()
+    .escape()
+    .equals("password")
+    .withMessage("Wrong password"),
   (req, res, next) =>{
     // Get validations
     const errors = validationResult(req);
@@ -119,6 +124,11 @@ exports.category_update_post = [
     .isLength({ min: 3, max: 100 })
     .withMessage("Category description should be between 3 and 100 characters long")
     .escape(),
+  body("password","Admin password required")
+    .trim()
+    .escape()
+    .equals("password")
+    .withMessage("Wrong password"),
   (req, res, next) =>{
     // Get validations
     const errors = validationResult(req);
@@ -183,7 +193,17 @@ exports.category_delete_get = (req, res, next) => {
 };
 
 // Delete category
-exports.category_delete_post = (req, res, next) => {
+// validate admin password first
+exports.category_delete_post = [
+  body("password","Admin password required")
+    .trim()
+    .escape()
+    .equals("password")
+    .withMessage("Wrong password"),
+    (req, res, next) => {
+      // Get validations
+    const errors = validationResult(req);
+
   // look if theres any instrument that still contains this category
   async.parallel({
     category(callback) {
@@ -196,6 +216,18 @@ exports.category_delete_post = (req, res, next) => {
   (err, results) => {
     if (err) {
       return next(err);
+    }
+
+    // If there are any errors, rerender form with previous values and error messages
+    if(!errors.isEmpty()) {
+      res.render("category_detail", {
+        title: "Category detail",
+        category: results.category,
+        instruments: results.instruments,
+        deleting: true,
+        error: true,
+      })
+      return;
     }
 
     // If there are any instruments in category ask the user to delete them
@@ -217,5 +249,6 @@ exports.category_delete_post = (req, res, next) => {
       res.redirect("/catalog/categories")
     })
   }
-)
-}
+  )
+  }
+]

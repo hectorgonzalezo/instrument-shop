@@ -18,9 +18,18 @@ block content
           button(type="button") Update
     else
       .item_buttons
-        h2 Are you sure you want to delete this category?
+        if error === undefined
+          h2 Are you sure you want to delete this category?
+        else 
+          h2 Wrong password
         form(method="POST", action="") 
-          |
+          .input_wrapper 
+            label.form-label(for="password") Admin password*: 
+            input#password.form-control(
+              type="password"
+              name="password"
+              required
+            )
           button(type="submit") Delete
         a(href=`/catalog/categories/${category._id}`) 
           |

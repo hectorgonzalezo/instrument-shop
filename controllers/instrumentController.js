@@ -86,6 +86,11 @@ exports.instrument_create_post = [
     .toInt()
     .isInt({ min: 1 })
     .withMessage("Stock should be at least 1"),
+  body("password","Admin password required")
+    .trim()
+    .escape()
+    .equals("password")
+    .withMessage("Wrong password"),
     (req, res, next) =>{
       // Get validations
       const errors = validationResult(req);
@@ -211,6 +216,11 @@ body("stock")
   .toInt()
   .isInt({ min: 1 })
   .withMessage("Stock should be at least 1"),
+body("password","Admin password required")
+  .trim()
+  .escape()
+  .equals("password")
+  .withMessage("Wrong password"),
   (req, res, next) =>{
     // Get validations
     const errors = validationResult(req);
@@ -283,6 +293,7 @@ body("stock")
   }
 ];
 
+// Ask for confirmation to delete instrument
 exports.instrument_delete_get = (req, res, next) => {
   Instrument.findById(req.params.id)
     .populate("categories")
@@ -298,11 +309,41 @@ exports.instrument_delete_get = (req, res, next) => {
     })
 };
 
-exports.instrument_delete_post = (req, res, next) =>{
-  Instrument.findByIdAndRemove(req.params.id).exec((err) => {
-    if (err) {
-      return next(err);
+// Delete instrument
+// validate admin password first
+exports.instrument_delete_post = [
+  body("password", "Admin password required")
+    .trim()
+    .escape()
+    .equals("password")
+    .withMessage("Wrong password"),
+  (req, res, next) => {
+      // Get validations
+      const errors = validationResult(req);
+
+    // If there are any errors, rerender form with previous values and error messages
+    if(!errors.isEmpty()) {
+      Instrument.findById(req.params.id)
+      .populate("categories")
+      .exec((err, instrument) => {
+        if (err){
+          return next(err);
+        }
+        res.render("instrument_detail", {
+          title: "Instrument display",
+          instrument,
+          deleting: true,
+          error: true,
+        });
+    })
+      return;
     }
-    res.redirect("/catalog/instruments")
-  })
-}
+
+    Instrument.findByIdAndRemove(req.params.id).exec((err) => {
+      if (err) {
+        return next(err);
+      }
+      res.redirect("/catalog/instruments");
+    });
+  },
+];
