@@ -80,7 +80,7 @@ h2 {
   font-size: 1.3rem;
 }
 
-main {
+.items {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   align-items: center;
@@ -92,7 +92,7 @@ main {
   }
 }
 
-.content {
+main {
   background-color: $manatee-light;
   color: $oxford-blue-2;
   display: flex;
@@ -162,5 +162,6 @@ footer {
 
   img{
     width: 36px;
+    height: 36px;
   }
 }
