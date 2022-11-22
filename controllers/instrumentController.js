@@ -216,11 +216,6 @@ body("stock")
   .toInt()
   .isInt({ min: 1 })
   .withMessage("Stock should be at least 1"),
-body("password","Admin password required")
-  .trim()
-  .escape()
-  .equals("password")
-  .withMessage("Wrong password"),
   (req, res, next) =>{
     // Get validations
     const errors = validationResult(req);
