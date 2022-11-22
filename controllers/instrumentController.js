@@ -315,7 +315,7 @@ exports.instrument_delete_post = [
   body("password", "Admin password required")
     .trim()
     .escape()
-    .equals("password")
+    .equals(process.env.PASSWORD || "password")
     .withMessage("Wrong password"),
   (req, res, next) => {
       // Get validations
