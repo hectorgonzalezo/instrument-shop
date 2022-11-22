@@ -25,6 +25,8 @@
   max-width: 400px; }
   .item_small img, .item_small_instrument img, .instrument img, .category img {
     max-width: 100px; }
+  .item_small:hover, .item_small_instrument:hover, .instrument:hover, .category:hover {
+    background-color: #5c677dff; }
 
 .item_small_instrument, .instrument {
   grid-template-columns: 2fr 1fr; }
@@ -53,6 +55,8 @@
   box-shadow: none;
   border-radius: 1rem;
   max-width: 700px; }
+  .instrument:hover {
+    background-color: inherit; }
   .instrument img {
     max-width: 200px;
     width: 100%; }
@@ -63,6 +67,8 @@
   box-shadow: none;
   border-radius: 1rem;
   max-width: 700px; }
+  .category:hover {
+    background-color: inherit; }
 
 .item_buttons {
   display: flex;
@@ -76,6 +82,9 @@
     color: #ba0a0a; }
   .item_buttons form {
     width: auto; }
+
+* {
+  outline: 1px dashed red; }
 
 :root {
   font-size: clamp(13px, 3vw, 16px); }
@@ -121,6 +130,10 @@ header {
   align-items: center;
   justify-content: space-between;
   gap: 20px; }
+  header a {
+    color: white; }
+    header a:hover {
+      color: #c1c8d7; }
   header div {
     display: flex;
     align-items: center;
@@ -161,16 +174,33 @@ form {
   padding: 10px;
   display: flex;
   flex-direction: column;
-  max-width: 300px;
+  width: clamp(250px, 70vw, 600px);
   gap: 15px; }
-  form .input_wrapper {
+  form .input_wrapper, form fieldset {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: flex-start;
     gap: 5px; }
-    form .input_wrapper > *:nth-child(2) {
-      margin-left: auto; }
+    form .input_wrapper > *:first-child, form fieldset > *:first-child {
+      width: 120px;
+      flex-shrink: 0;
+      font-size: 1.2rem; }
+    form .input_wrapper > *:last-child, form fieldset > *:last-child {
+      flex-grow: 1;
+      flex-basis: 150px; }
+    form .input_wrapper input[type="number"], form .input_wrapper select, form fieldset input[type="number"], form fieldset select {
+      max-width: 70px; }
   form button {
     align-self: center; }
+  form .categories_form {
+    display: grid;
+    font-size: 0.9rem;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 5px; }
+    form .categories_form .category_form {
+      display: flex;
+      gap: 5px; }
 
 footer {
   display: flex;

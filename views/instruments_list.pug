@@ -4,9 +4,11 @@ block content
   h1= title
   main
     a(href="/catalog/instruments/create") 
+      |
       button Add new Instrument
     each instrument in instruments
       a(href=`/catalog/instruments/${instrument._id}`) 
+        |
         |
         .item_small_instrument
           h1= `${instrument.name} - ${instrument.brand}`

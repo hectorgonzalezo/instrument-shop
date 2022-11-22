@@ -35,6 +35,9 @@
   img{
     max-width: 100px
   }
+  &:hover{
+    background-color: $black-coral;
+  }
 }
 
 .item_small_instrument{
@@ -73,6 +76,9 @@
   box-shadow: none;
   border-radius: 1rem;
   max-width: 700px;
+  &:hover{
+    background-color: inherit;
+  }
 
   img{
     max-width: 200px;
@@ -87,6 +93,10 @@
   box-shadow: none;
   border-radius: 1rem;
   max-width: 700px; 
+  &:hover{
+    background-color: inherit;
+  }
+
 }
 
 .item_buttons {
@@ -106,5 +116,5 @@
 }
 
 * {
-  // outline: 1px dashed red;
+  outline: 1px dashed red;
 }

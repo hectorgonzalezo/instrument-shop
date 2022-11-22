@@ -20,16 +20,20 @@ block content
   if deleting !== undefined
     .item_buttons
       h2 Are you sure you want to delete this instrument?
-      form(method="POST" action="") 
+      form(method="POST", action="") 
+        |
         button(type="submit") Delete
       a(href=`/catalog/instruments/${instrument._id}`) 
+        |
         |
         button(type="button") Go back
   else
     .item_buttons
       a(href=`/catalog/instruments/${instrument._id}/delete`) 
         |
+        |
         button(type="button") Delete
       a(href=`/catalog/instruments/${instrument._id}/update`) 
+        |
         |
         button(type="button") Update

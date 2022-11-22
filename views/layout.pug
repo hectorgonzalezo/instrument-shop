@@ -8,18 +8,20 @@ html
     meta(name="viewport", content="width=device-width, initial-scale=1")
   body
     header
-      h1 Instruments Catalog
+      a(href="/") 
+        |
+        h1 Instruments Catalog
       .buttons-area
         a(href="/catalog/instruments")
           button All instruments
-        a(href="/catalog/categories")      
-          button  All categories
-        a(href="/") 
-          button Home
+        a(href="/catalog/categories") 
+          |
+          button All categories
     .content
       block content
     footer
       h1 Hector González Orozco
       a(href="https://github.com/hectorgonzalezo/instrument-shop") 
+        |
         |
         img(src="/images/github-logo.png", alt="Github")

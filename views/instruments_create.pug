@@ -1,46 +1,51 @@
 extends layout
 
 block content
-  h1= title
-  p Required fields are marked with *
-  form(method="POST", action="" enctype="multipart/form-data") 
+  form(method="POST", action="", enctype="multipart/form-data") 
+    |
+    h1= title
+    p Required fields are marked with *
     |
     .input_wrapper 
-      label.form-label(for="image") Add instrument image
-      input.form-control#image(type="file" name="image" accept="image/jpeg")
+      |
+      label.form-label(for="image") Image
+      input#image.form-control(type="file", name="image", accept="image/jpeg")
     .input_wrapper
       label.form-label(for="name") Name*:
-      input.form-control#name(
+      input#name.form-control(
         type="text",
         name="name",
         minlength="3",
         maxlength="25",
         value=instrument === undefined ? "" : instrument.name,
+        placeholder="Instrument name",
         required
       )
     .input_wrapper
       label.form-label(for="brand") Brand*:
-      input.form-control#brand(
+      input#brand.form-control(
         type="text",
         name="brand",
         minlength="3",
         maxlength="25",
         value=instrument === undefined ? "" : instrument.brand,
+        placeholder="Instrument brand",
         required
       )
     .input_wrapper
       label.form-label(for="model") Model:
-      input.form-control#model(
+      input#model.form-control(
         type="text",
         name="model",
+        placeholder="Instrument model",
         value=instrument === undefined ? "" : instrument.model
       )
     .input_wrapper
       label.form-label(for="description") Description:
-      textarea.form-control#description(name="description", maxlength="300")= instrument === undefined ? "" : instrument.description
+      textarea#description.form-control(name="description", maxlength="300" placeholder="Instrument description")= instrument === undefined ? "" : instrument.description
     .input_wrapper
       label.form-label(for="tuning") Tuning:
-      select.form-select.form-select-sm#tuning(name="tuning")
+      select#tuning.form-select.form-select-sm(name="tuning")
         option(value="") Key
         each letter in ["A", "B", "C", "D", "E", "F", "G"]
           each accidental in ["", "b", "#"]
@@ -50,16 +55,18 @@ block content
             )= `${letter}${accidental}`
     .input_wrapper
       label.form-label(for="price") Price*:
-      input.form-control#price(
-        type="number",
-        name="price",
-        min="1",
-        value=instrument === undefined ? "" : instrument.price,
-        required
-      )
+      .input-group
+        span.input-group-text $
+        input#price.form-control(
+          type="number",
+          name="price",
+          min="1",
+          value=instrument === undefined ? "1" : instrument.price,
+          required
+        )
     .input_wrapper
       label.form-label(for="stock") Stock*:
-      input.form-control#stock(
+      input#stock.form-control(
         type="number",
         name="stock",
         min="1",
@@ -69,16 +76,20 @@ block content
     .input_wrapper
       fieldset 
         |
+        |
         legend Categories*:
+        .categories_form
           each category in categories
-            input(
-              type="checkbox",
-              id=`${category.name}-category`,
-              name=`${category.name}-category`,
-              value=`${category.name}-category`,xw
-              checked=instrument !== undefined && instrument.categories !== undefined && instrument.categories.some((instrumentCategory) => instrumentCategory.name === category.name)
-            )
-            label(for=`${category.name}-category`)= category.name
+            .category_form
+              input.form-check-input(
+                type="checkbox",
+                id=`${category.name}-category`,
+                name=`${category.name}-category`,
+                value=`${category.name}-category`,
+                xw,
+                checked=instrument !== undefined && instrument.categories !== undefined && instrument.categories.some((instrumentCategory) => instrumentCategory.name === category.name)
+              )
+              label.form-check-label(for=`${category.name}-category`)= category.name
     button(type="submit")= title
 
     if errors

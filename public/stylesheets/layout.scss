@@ -54,6 +54,12 @@ header {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+  a {
+    color: white;
+    &:hover{
+      color: $manatee-light
+    }
+  }
   div {
     display: flex;
     align-items: center;
@@ -104,18 +110,41 @@ form{
   padding: 10px;
   display: flex;
   flex-direction: column;
-  max-width: 300px;
+  width: clamp(250px, 70vw, 600px);
   gap: 15px;
-  .input_wrapper{
+  .input_wrapper, fieldset{
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: flex-start;
     gap: 5px;
-    & > *:nth-child(2){
-      margin-left: auto;
+    & > *:first-child{
+      width: 120px;
+      flex-shrink: 0;
+      font-size: 1.2rem;
+    }
+    & > *:last-child{
+      flex-grow: 1;
+      flex-basis:150px;
+    }
+
+    input[type="number"], select {
+      max-width: 70px;
     }
   }
   button{
     align-self: center;
+  }
+
+  .categories_form{
+    display: grid;
+    font-size: 0.9rem;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 5px;
+    .category_form{
+      display: flex;
+      gap: 5px;
+    }
   }
 }
 
