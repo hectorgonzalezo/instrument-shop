@@ -5,16 +5,15 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const sassMiddleware = require('node-sass-middleware');
 const mongoose = require("mongoose");
-const methodOverride = require("method-override");
-const multer = require("multer");
-const GridFsStorage = require("multer-gridfs-storage");
+const compression = require("compression");
 
 const indexRouter = require('./routes/index');
 const catalogRouter = require('./routes/catalog');
 
+
 const app = express();
 
-const mongoDB = "mongodb+srv://admin:iww500maiww500m@cluster0.aagfox3.mongodb.net/shop?retryWrites=true&w=majority";
+const mongoDB = process.env.MONGODB_URI || "mongodb+srv://admin:iww500maiww500m@cluster0.aagfox3.mongodb.net/shop?retryWrites=true&w=majority";
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
@@ -36,6 +35,7 @@ app.use(sassMiddleware({
   indentedSyntax: false, // compile scss
   sourceMap: true
 }));
+app.use(compression());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static('images'));
 
