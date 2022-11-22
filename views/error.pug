@@ -1,6 +1,9 @@
 extends layout
 
 block content
-  h1= message
+  if message === "Not Found"
+    h1 Couldn't find webpage!
+  else 
+    h1= message
   h2= error.status
   pre #{ error.stack }
