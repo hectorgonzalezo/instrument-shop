@@ -8,7 +8,7 @@ block content
     each instrument in instruments
       a(href=`/catalog/instruments/${instrument._id}`) 
         |
-        .item_small
+        .item_small_instrument
           h1= `${instrument.name} - ${instrument.brand}`
           h2= instrument.model
           if instrument.tuning !== undefined
@@ -18,5 +18,5 @@ block content
           dl
             dt Categories:
               each category in instrument.categories
-                dd= category.name
+                dd= `- ${category.name}`
           p= `$${instrument.price}`

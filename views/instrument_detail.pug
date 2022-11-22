@@ -1,7 +1,6 @@
 extends layout
 
 block content
-  h1= title
   main
     .instrument
       if instrument.imgUrl !== ''
@@ -14,21 +13,23 @@ block content
       dl
         dt Categories:
           each category in instrument.categories
-            dd= category.name
+            dd= `- ${category.name}`
       p= `$${instrument.price}`
       p= `In stock: ${instrument.stock}`
 
   if deleting !== undefined
-    h2 Are you sure you want to delete this instrument?
-    form(method="POST" action="") 
-      button(type="submit") Delete
-    a(href=`/catalog/instruments/${instrument._id}`) 
-      |
-      button(type="button") Go back
+    .item_buttons
+      h2 Are you sure you want to delete this instrument?
+      form(method="POST" action="") 
+        button(type="submit") Delete
+      a(href=`/catalog/instruments/${instrument._id}`) 
+        |
+        button(type="button") Go back
   else
-    a(href=`/catalog/instruments/${instrument._id}/delete`) 
-      |
-      button(type="button") Delete
-    a(href=`/catalog/instruments/${instrument._id}/update`) 
-      |
-      button(type="button") Update
+    .item_buttons
+      a(href=`/catalog/instruments/${instrument._id}/delete`) 
+        |
+        button(type="button") Delete
+      a(href=`/catalog/instruments/${instrument._id}/update`) 
+        |
+        button(type="button") Update

@@ -1,17 +1,45 @@
 extends layout
 
 block content
-  h1= title
   .category
     h1= category.name
     p= category.description
+  if deleting !== undefined
+    if instruments.length > 0
+      .item_buttons
+        h2 First delete every instrument inside category!
+        a(href=`/catalog/categories/${category._id}/delete`) 
+          |
+          button(type="button") Delete
+        a(href=`/catalog/categories/${category._id}/update`) 
+          |
+          button(type="button") Update
+    else
+      .item_buttons
+        h2 Are you sure you want to delete this category?
+        form(method="POST" action="") 
+          button(type="submit") Delete
+        a(href=`/catalog/categories/${category._id}`) 
+          |
+          button(type="button") Go back
+  else
+    .item_buttons
+      a(href=`/catalog/categories/${category._id}/delete`) 
+        |
+        button(type="button") Delete
+      a(href=`/catalog/categories/${category._id}/update`) 
+        |
+        button(type="button") Update
+  h2 Instruments in category:
   main
     each instrument in instruments
       a(href=`/catalog/instruments/${instrument._id}`) 
         |
-        .item_small
+        .item_small_instrument
           h1= `${instrument.name} - ${instrument.brand}`
           h2= instrument.model
+          if instrument.imgUrl !== ''
+            img(src=instrument.imgUrl, alt=instrument.name)
           if instrument.tuning != ''
             p.tuning= `Tuning: ${instrument.tuning}`
           dl
@@ -19,27 +47,5 @@ block content
               each category in instrument.categories
                 dd= category.name
           p= `$${instrument.price}`
-  if deleting !== undefined
-    if instruments.length > 0
-      h2 First delete every instrument inside category!
-      a(href=`/catalog/categories/${category._id}/delete`) 
-        |
-        button(type="button") Delete
-      a(href=`/catalog/categories/${category._id}/update`) 
-        |
-        button(type="button") Update
-    else
-      h2 Are you sure you want to delete this category?
-      form(method="POST" action="") 
-        button(type="submit") Delete
-      a(href=`/catalog/categories/${category._id}`) 
-        |
-        button(type="button") Go back
-  else
-    a(href=`/catalog/categories/${category._id}/delete`) 
-      |
-      button(type="button") Delete
-    a(href=`/catalog/categories/${category._id}/update`) 
-      |
-      button(type="button") Update
-  
+
+    

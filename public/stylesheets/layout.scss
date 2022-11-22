@@ -12,7 +12,7 @@
   color: white;
   font-size: clamp(1rem, 3vw, 1.4rem);
   border-radius: 22px;
-  padding: 3px 8px 3px 8px;
+  padding: 3px 12px 3px 12px;
   box-shadow: 1px 1px 2px black;
   position: relative;
   &:hover{
@@ -25,6 +25,10 @@
   }
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
 .title {
   color: $oxford-blue-2;
   font-size: 4rem;
@@ -47,12 +51,18 @@ body {
 header {
   background-color: $roman-silver;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
+  justify-content: space-between;
   gap: 20px;
+  div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
 }
 
-a {
+:root a {
   text-decoration: none;
 }
 
@@ -68,6 +78,7 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   align-items: center;
+  justify-items: center;
   width: 100%;
   gap: 30px;
   & > a:first-child {
@@ -76,8 +87,8 @@ main {
 }
 
 .content {
-  background-color: $manatee;
-  color: white;
+  background-color: $manatee-light;
+  color: $oxford-blue-2;
   display: flex;
   gap: 25px;
   align-items: center;
