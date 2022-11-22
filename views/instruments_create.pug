@@ -6,11 +6,11 @@ block content
   form(method="POST", action="" enctype="multipart/form-data") 
     |
     .input_wrapper 
-      label(for="image") Add instrument image
-      input#image(type="file" name="image" accept="image/jpeg")
+      label.form-label(for="image") Add instrument image
+      input.form-control#image(type="file" name="image" accept="image/jpeg")
     .input_wrapper
-      label(for="name") Name*:
-      input#name(
+      label.form-label(for="name") Name*:
+      input.form-control#name(
         type="text",
         name="name",
         minlength="3",
@@ -19,8 +19,8 @@ block content
         required
       )
     .input_wrapper
-      label(for="brand") Brand*:
-      input#brand(
+      label.form-label(for="brand") Brand*:
+      input.form-control#brand(
         type="text",
         name="brand",
         minlength="3",
@@ -29,18 +29,18 @@ block content
         required
       )
     .input_wrapper
-      label(for="model") Model:
-      input#model(
+      label.form-label(for="model") Model:
+      input.form-control#model(
         type="text",
         name="model",
         value=instrument === undefined ? "" : instrument.model
       )
     .input_wrapper
-      label(for="description") Description:
-      textarea#description(name="description", maxlength="300")= instrument === undefined ? "" : instrument.description
+      label.form-label(for="description") Description:
+      textarea.form-control#description(name="description", maxlength="300")= instrument === undefined ? "" : instrument.description
     .input_wrapper
-      label(for="tuning") Tuning:
-      select#tuning(name="tuning")
+      label.form-label(for="tuning") Tuning:
+      select.form-select.form-select-sm#tuning(name="tuning")
         option(value="") Key
         each letter in ["A", "B", "C", "D", "E", "F", "G"]
           each accidental in ["", "b", "#"]
@@ -49,8 +49,8 @@ block content
               selected=instrument !== undefined && instrument.tuning === `${letter}${accidental}`
             )= `${letter}${accidental}`
     .input_wrapper
-      label(for="price") Price*:
-      input#price(
+      label.form-label(for="price") Price*:
+      input.form-control#price(
         type="number",
         name="price",
         min="1",
@@ -58,8 +58,8 @@ block content
         required
       )
     .input_wrapper
-      label(for="stock") Stock*:
-      input#stock(
+      label.form-label(for="stock") Stock*:
+      input.form-control#stock(
         type="number",
         name="stock",
         min="1",
@@ -75,7 +75,7 @@ block content
               type="checkbox",
               id=`${category.name}-category`,
               name=`${category.name}-category`,
-              value=`${category.name}-category`,
+              value=`${category.name}-category`,xw
               checked=instrument !== undefined && instrument.categories !== undefined && instrument.categories.some((instrumentCategory) => instrumentCategory.name === category.name)
             )
             label(for=`${category.name}-category`)= category.name

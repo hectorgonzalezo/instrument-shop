@@ -6,8 +6,8 @@ block content
   form(method="POST", action="") 
     |
     .input_wrapper
-      label(for="name") Category name*:
-      input#name(
+      label.form-label(for="name") Category name*:
+      input.form-control#name(
         type="text",
         name="name",
         minlength="3",
@@ -17,8 +17,8 @@ block content
         required
       )
     .input_wrapper
-      label(for="descripton") Category description*:
-      textarea#description(
+      label.form-label(for="descripton") Category description*:
+      textarea.form-control#description(
         type="text",
         name="description",
         minlength="3",

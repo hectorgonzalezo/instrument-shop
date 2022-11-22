@@ -6,12 +6,12 @@
   font-size: clamp(13px, 3vw, 16px);
 }
 
-button{
+:root button{
   border: none;
   background-color: $true-blue;
   color: white;
   font-size: clamp(1rem, 3vw, 1.4rem);
-  border-radius: 12px;
+  border-radius: 22px;
   padding: 3px 8px 3px 8px;
   box-shadow: 1px 1px 2px black;
   position: relative;
