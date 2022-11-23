@@ -1,19 +1,23 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
+require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const sassMiddleware = require('node-sass-middleware');
 const mongoose = require("mongoose");
 const compression = require("compression");
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 const indexRouter = require('./routes/index');
 const catalogRouter = require('./routes/catalog');
 
-
 const app = express();
 
-const mongoDB = process.env.MONGODB_URI || "mongodb+srv://admin:iww500maiww500m@cluster0.aagfox3.mongodb.net/shop?retryWrites=true&w=majority";
+const mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
