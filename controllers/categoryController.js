@@ -119,11 +119,6 @@ exports.category_update_post = [
     .isLength({ min: 3, max: 100 })
     .withMessage("Category description should be between 3 and 100 characters long")
     .escape(),
-  body("password","Admin password required")
-    .trim()
-    .escape()
-    .equals("password")
-    .withMessage("Wrong password"),
   (req, res, next) =>{
     // Get validations
     const errors = validationResult(req);

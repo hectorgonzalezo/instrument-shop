@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  form(method="POST", action="", enctype="multipart/form-data") 
+  form(method="POST", action="" enctype="multipart/form-data") 
     |
     h1= title
     p Required fields are marked with *
@@ -69,8 +69,8 @@ block content
       input#stock.form-control(
         type="number",
         name="stock",
-        min="1",
-        value=instrument === undefined ? "1" : instrument.stock,
+        min="0",
+        value=instrument === undefined ? "0" : instrument.stock,
         required
       )
     .input_wrapper

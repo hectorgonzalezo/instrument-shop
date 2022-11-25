@@ -63,9 +63,7 @@ exports.instrument_create_post = [
   body("model")
     .optional({ checkFalsy: true })
     .trim()
-    .escape()
-    .isAlphanumeric()
-    .withMessage("Instrument model can only contain letters or numbers"),
+    .escape(),
   body("description", "Instrument description required")
     .optional({ checkFalsy: true })
     .trim()
@@ -84,13 +82,8 @@ exports.instrument_create_post = [
     .trim()
     .escape()
     .toInt()
-    .isInt({ min: 1 })
-    .withMessage("Stock should be at least 1"),
-  body("password","Admin password required")
-    .trim()
-    .escape()
-    .equals("password")
-    .withMessage("Wrong password"),
+    .isInt({ min: 0 })
+    .withMessage("Stock should be at least 0"),
     (req, res, next) =>{
       // Get validations
       const errors = validationResult(req);
@@ -113,7 +106,6 @@ exports.instrument_create_post = [
         return;
       }
 
-      console.log(req.file);
 
       // Make an array full of categories
       categoriesArray = categoriesArray.map((category) => category.match(/.*(?=-category)/)[0])
@@ -123,6 +115,7 @@ exports.instrument_create_post = [
           return next(err);
         }
       const categoriesIds = categories.map((category) => category._id)
+
   
       // If it's valid, add the category to database and open record
       const instrument = new Instrument({
@@ -131,11 +124,12 @@ exports.instrument_create_post = [
         ...(req.body.model !== '') && { model: req.body.model },
         ...(req.body.description !== '') && { description: req.body.description },
         ...(req.body.tuning !== '') && { tuning: req.body.tuning },
-        ...(req.file !== undefined) && { imgUrl: `/${req.file.path }` },
+        ...(req.file !== undefined) && { imgUrl: `/images/items/${req.file.filename}` },
         categories: categoriesIds,
         price: req.body.price,
         stock: req.body.stock,
       });
+
 
       instrument.save((instrumentErr) => {
         if (instrumentErr) {
@@ -193,9 +187,7 @@ body("brand", "Instrument brand required")
 body("model")
   .optional({ checkFalsy: true })
   .trim()
-  .escape()
-  .isAlphanumeric()
-  .withMessage("Instrument model can only contain letters or numbers"),
+  .escape(),
 body("description", "Instrument description required")
   .optional({ checkFalsy: true })
   .trim()
@@ -214,9 +206,10 @@ body("stock")
   .trim()
   .escape()
   .toInt()
-  .isInt({ min: 1 })
-  .withMessage("Stock should be at least 1"),
-  (req, res, next) =>{
+  .isInt({ min: 0 })
+  .withMessage("Stock should be at least 0"),
+  (req, res, next) => {
+    console.log(req.file)
     // Get validations
     const errors = validationResult(req);
     // get chosen fields
@@ -231,7 +224,7 @@ body("stock")
 
       Category.find().exec((err, categories) => {
         res.render("instruments_create", {
-          title: "Create new instrument",
+          title: "Update instrument",
           instrument: req.body,
           categories,
           errors:
@@ -265,6 +258,7 @@ body("stock")
             description: req.body.description,
           }),
           ...(req.body.tuning !== "" && { tuning: req.body.tuning }),
+          ...(req.file !== undefined) && { imgUrl: `/images/items/${req.file.filename}` },
           categories: categoriesIds,
           price: req.body.price,
           stock: req.body.stock,

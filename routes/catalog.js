@@ -4,16 +4,18 @@ const router = express.Router();
 
 const multer = require("multer");
 
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, '/images/items/')
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, file.originalname)
-//   }
-// })
+const storage = multer.diskStorage({
+  destination: (req, file, cb) =>{
+    cb(null, './public/images/items')
+  },
 
-const upload = multer({ dest: 'images/items/' })
+  filename: (req, file, cb) => {
+    const suffix = Math.round(Math.random() * 1E9);
+    cb(null, `${file.fieldname}-${suffix}`)
+  }
+})
+
+const upload = multer({ storage: storage })
 
 const instrumentController = require('../controllers/instrumentController');
 const categoryController = require('../controllers/categoryController');
@@ -26,7 +28,7 @@ router.post('/instruments/create', upload.single("image"), instrumentController.
 
 // routes to update instruments
 router.get('/instruments/:id/update', instrumentController.instrument_update_get);
-router.post('/instruments/:id/update', instrumentController.instrument_update_post);
+router.post('/instruments/:id/update', upload.single("image"), instrumentController.instrument_update_post);
 
 // routes to delete instruments
 router.get('/instruments/:id/delete', instrumentController.instrument_delete_get);

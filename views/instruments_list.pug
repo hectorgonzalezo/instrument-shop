@@ -22,3 +22,7 @@ block content
               each category in instrument.categories
                 dd= `- ${category.name}`
           p= `$${instrument.price}`
+          if instrument.inStock 
+            p.text-success In stock
+          else 
+            p.text-danger Out of stock
